@@ -41,5 +41,6 @@ export const notes = [
 export const awards = [
   ['POS Team Award', 'October 2024', 'POS-Award.jpeg', 'Certificate presented to Pranesh by the POS team'],
   ['Award presentation', 'Toshiba Software India', 'pos-award-01.jpeg', 'Pranesh receiving his framed award at Toshiba'],
+  ['Toshiba MD Award 24B', '24 April 2025', 'Performance-Award .jpeg', 'Plaque awarded to Pranesh T of the TSIP ELERA POS & Device Broker Team'],
   ['Across & Beyond Award', 'April 2026', 'HR-Intern-Award.jpeg', 'Across & Beyond Award plaque for the Global Resource Hiring Team'],
 ];
