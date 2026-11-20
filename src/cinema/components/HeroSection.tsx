@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { links } from '../../content';
@@ -28,45 +28,11 @@ const fadeUpVariants: Variants = {
   },
 };
 
-const navItems = [
-  { name: 'ABOUT', href: '#about' },
-  { name: 'PROJECTS', href: '#work' },
-  { name: 'SKILLS', href: '#skills' },
-  { name: 'EXPERIENCE', href: '#experience' },
-  { name: 'CONTACT', href: '#contact' },
-];
-
 export const HeroSection: React.FC = () => {
   const reduced = useReducedMotion();
   const [paused, setPaused] = useState(false);
-  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
-    <section className="cinema-hero relative w-full h-screen overflow-hidden bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black cursor-none">
-      {/* ================= 1. MINIMAL CUSTOM CURSOR ================= */}
-      {cursorPos.x >= 0 && (
-        <motion.div
-          className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#D4AF37]/40 flex items-center justify-center backdrop-blur-[1px]"
-          animate={{
-            x: cursorPos.x - (isHovered ? 24 : 5),
-            y: cursorPos.y - (isHovered ? 24 : 5),
-            width: isHovered ? 48 : 10,
-            height: isHovered ? 48 : 10,
-            backgroundColor: isHovered ? 'rgba(212, 175, 55, 0.1)' : 'rgba(235, 215, 195, 0.95)',
-          }}
-          transition={{ type: 'spring', damping: 30, stiffness: 350, mass: 0.5 }}
-        />
-      )}
-
+    <section id="home" className="cinema-hero relative w-full h-screen overflow-hidden bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black">
       {/* ================= 2. FIXED VIDEO LAYER ================= */}
       <div className="hero-film-layer absolute inset-0 z-0 overflow-hidden pointer-events-none bg-black flex items-center justify-end">
         {reduced || paused ? <img className="walk-film" src="Assets/stage/gemini-mine-stage.jpg" alt="Pranesh in a dark suit on a studio stage"/> : <video className="walk-film" autoPlay muted loop playsInline poster="Assets/stage/gemini-mine-stage.jpg" src="Assets/stage/gemini-mine-stage.mp4" aria-label="Pranesh walking across a spotlighted studio stage"/>}
@@ -79,52 +45,6 @@ export const HeroSection: React.FC = () => {
       {/* ================= 4. CONTENT LAYER ================= */}
       <div className="hero-content relative z-10 flex flex-col justify-between h-full w-full px-6 sm:px-12 lg:px-16 pt-6 pb-8 pointer-events-none">
         
-        {/* Navigation Bar */}
-        <header className="relative flex items-center justify-between w-full pointer-events-auto">
-          <a
-            href="#"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="text-xs sm:text-sm font-semibold tracking-[0.35em] uppercase text-[#EAD8C7] hover:opacity-75 transition-opacity"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            PRANESH T.
-          </a>
-
-          {/* Navigation Links */}
-          <nav
-            className="hidden md:flex items-center space-x-8 lg:space-x-10 text-[11px] tracking-[0.28em] font-light uppercase text-[#C4B5A5] absolute left-1/2 -translate-x-1/2"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                className="relative group py-1 transition-colors duration-300 hover:text-[#FFF5EB]"
-              >
-                {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#D4AF37]/50 transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-          </nav>
-
-          {/* Right Action */}
-          <a
-            href={links.email}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="group flex items-center space-x-2 text-[11px] tracking-[0.24em] font-light uppercase py-2 px-4 border border-[#8C6D4F]/50 hover:border-[#D4AF37] text-[#EAD8C7] transition-all duration-300 backdrop-blur-sm ml-auto md:ml-0"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            <span>LET&apos;S TALK</span>
-            <span className="transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs">
-              ↗
-            </span>
-          </a>
-        </header>
-
         {/* Main Hero Row */}
         <div className="hero-row relative flex flex-col md:flex-row items-center justify-between w-full pt-4 pb-2 my-auto">
           
@@ -190,8 +110,6 @@ export const HeroSection: React.FC = () => {
               {/* Explore My Work CTA */}
               <motion.a
                 href="#work"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
                 whileHover={{ scale: 1.02 }}
                 className="relative inline-flex items-center space-x-3 px-6 sm:px-7 py-3.5 border border-[#8C6D4F] bg-[#120F0C]/80 hover:border-[#D4AF37] text-[#EAD8C7] hover:text-[#FFF5EB] text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300 shadow-[0_0_25px_rgba(212,175,55,0.18)]"
               >
@@ -207,8 +125,6 @@ export const HeroSection: React.FC = () => {
                 href={links.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
                 whileHover={{ scale: 1.02 }}
                 className="relative inline-flex items-center space-x-2 px-6 sm:px-7 py-3.5 border border-[#8C6D4F]/40 hover:border-[#8C6D4F] text-[#BFA895] hover:text-[#EAD8C7] text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300"
               >
