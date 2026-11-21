@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { links } from '../../content';
@@ -30,18 +30,23 @@ const fadeUpVariants: Variants = {
 
 export const HeroSection: React.FC = () => {
   const reduced = useReducedMotion();
+  const video = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
   return (
     <section id="home" className="cinema-hero relative w-full h-screen overflow-hidden bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black">
       {/* ================= 2. FIXED VIDEO LAYER ================= */}
       <div className="hero-film-layer absolute inset-0 z-0 overflow-hidden pointer-events-none bg-black flex items-center justify-end">
-        {reduced || paused ? <img className="walk-film" src="Assets/stage/gemini-mine-stage.jpg" alt="Pranesh in a dark suit on a studio stage"/> : <video className="walk-film" autoPlay muted loop playsInline poster="Assets/stage/gemini-mine-stage.jpg" src="Assets/stage/gemini-mine-stage.mp4" aria-label="Pranesh walking across a spotlighted studio stage"/>}
+        {reduced ? <img className="walk-film" src="Assets/stage/gemini-mine-stage.jpg" alt="Pranesh in a dark suit on a studio stage"/> : <video ref={video} onPause={() => setPaused(true)} onPlay={() => setPaused(false)} className="walk-film" autoPlay muted loop playsInline poster="Assets/stage/gemini-mine-stage.jpg" src="Assets/stage/gemini-mine-stage.mp4" aria-label="Pranesh walking across a spotlighted studio stage"/>}
 
         {/* Seamless Soft Left Edge Blend */}
         <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black via-black/85 to-transparent pointer-events-none" />
 
       </div>
-      {!reduced && <button className="film-toggle" onClick={() => setPaused(!paused)}>{paused ? 'Play motion' : 'Pause motion'}</button>}
+      {!reduced && <button className="film-toggle" onClick={() => {
+        const film = video.current;
+        if (film?.paused) void film.play().catch(() => setPaused(true));
+        else film?.pause();
+      }}>{paused ? 'Play motion' : 'Pause motion'}</button>}
       {/* ================= 4. CONTENT LAYER ================= */}
       <div className="hero-content relative z-10 flex flex-col justify-between h-full w-full px-6 sm:px-12 lg:px-16 pt-6 pb-8 pointer-events-none">
         

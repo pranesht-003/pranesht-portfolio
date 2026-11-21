@@ -6,10 +6,10 @@ html,body{margin:0;background:#000;overflow-x:clip;color:#e8dfd8}
 .film-toggle{position:absolute;z-index:12;bottom:1.2rem;right:2rem;color:#dfc598;background:#0c0a08;border:1px solid #756145;padding:.45rem .85rem;font:11px Montserrat,sans-serif;letter-spacing:.12em}
 .contact-link{padding:1rem;border-bottom:1px solid #67543d;color:#efdbb9;display:block}.contact-link:hover{color:white}
 
-.project-list, .award-list { display: grid; gap: clamp(1rem, 3vw, 3rem); }
+.project-list, .award-list { clip-path: inset(var(--nav-clip, 0px) 0 0); display: grid; gap: clamp(1rem, 3vw, 3rem); }
 .project-card, .award-card { position: relative; min-width: 0; }
 @media (prefers-reduced-motion: no-preference) {
-  :is(.project-card, .award-card):not(:last-child) { position: sticky; top: min(1rem, calc(100svh - var(--card-height, 100svh) - 1rem)); }
+  :is(.project-card, .award-card):not(:last-child) { position: sticky; top: min(var(--header-height), calc(100svh - var(--card-height, 100svh) - 1rem)); }
   .project-card:focus-within { position: relative; }
 }
 @media (max-width: 767px) {
